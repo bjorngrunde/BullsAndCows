@@ -1,3 +1,4 @@
+#pragma once
 #include "FBullCowGame.h"
 #include <map>
 #define TMap std::map
@@ -6,13 +7,18 @@ using int32 = int;
 
 FBullCowGame::FBullCowGame() { Reset(); }
 
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 
 bool FBullCowGame::IsGameWon() const { return bGameIsWon; }
+
+int32 FBullCowGame::GetMaxTries() const 
+{ 
+	TMap<int32, int32> WordLenghtToMaxTries{ {4, 5}, {5, 5}, {6, 7}, {8, 9}, {9, 12}, {10, 14} };
+	return WordLenghtToMaxTries[MyHiddenWord.length()];
+}
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const 
 {
@@ -24,7 +30,6 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 	{
 		return EGuessStatus::Not_Lowercase;
 	}
-	// if the guess length is wrong
 	else if (Guess.length() != GetHiddenWordLength())
 	{
 		return EGuessStatus::Wrong_Length;
@@ -108,11 +113,9 @@ bool FBullCowGame::IsLowerCase(FString Word) const
 }
 
 void FBullCowGame::Reset() { 
-	constexpr int32 MAX_TRIES = 8;
 	const FString HIDDEN_WORD = "planet";
 
 	MyCurrentTry = 1;
-	MyMaxTries = MAX_TRIES;
 	MyHiddenWord = HIDDEN_WORD;
 	bGameIsWon = false;
 	return; 

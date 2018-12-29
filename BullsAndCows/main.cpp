@@ -3,6 +3,8 @@
 	This acts as the view in a MVC pattern, and is responsible for all
 	user interaction. For game logic, se the BullCowGame class.
 */
+#pragma once
+
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
